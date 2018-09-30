@@ -16,29 +16,38 @@ cache:
 matrix:
   include:
     - name: "Debug"
-      env: CXXFLAGS="-g -Og" MATRIX_EXPORT="CC='gcc-7' CXX='g++-7'"
+      env: CXXFLAGS="-g -Og" MATRIX_EVAL="export CC='gcc-7' CXX='g++-7'"
       addons: { apt: { packages: ["g++-7", valgrind], sources: [ubuntu-toolchain-r-test] } }
 
     - name: "Release"
-      env: CXXFLAGS="-g -O3" MATRIX_EXPORT="CC='gcc-7' CXX='g++-7'"
+      env: CXXFLAGS="-g -O3" MATRIX_EVAL="export CC='gcc-7' CXX='g++-7'"
       addons: { apt: { packages: ["g++-7", valgrind], sources: [ubuntu-toolchain-r-test] } }
 
 before_install:
-  - eval "export ${MATRIX_EXPORT}"
-  - echo "before_install: CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+  - set -e
+  - eval "${MATRIX_EVAL}"
+  - echo "before_install: CC=${CC} CXX=${CXX}"
+  - ${CC} -v
+  - ${CXX} -v
 
 install:
   ### Fail on the first error ###
   - set -e
-  - echo "install: CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+  - echo "install: CC=${CC} CXX=${CXX}"
+  - ${CC} -v
+  - ${CXX} -v
 
 before_script:
   - set -e
-  - echo "before_script: CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+  - echo "before_script: CC=${CC} CXX=${CXX}"
+  - ${CC} -v
+  - ${CXX} -v
 
 script:
   - set -e
-  - echo "script: CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+  - echo "script: CC=${CC} CXX=${CXX}"
+  - ${CC} -v
+  - ${CXX} -v
   - make --no-print-directory all
 
 after_script:
