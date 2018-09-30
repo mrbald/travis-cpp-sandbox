@@ -26,28 +26,32 @@ matrix:
 before_install:
   - set -e
   - eval "${MATRIX_EVAL}"
-  - echo "before_install: CC=${CC} CXX=${CXX}"
-  - ${CC} -v
-  - ${CXX} -v
+  - |
+    echo "before_install: CC=${CC} CXX=${CXX}"
+    ${CC} -v
+    ${CXX} -v
 
 install:
   ### Fail on the first error ###
   - set -e
-  - echo "install: CC=${CC} CXX=${CXX}"
-  - ${CC} -v
-  - ${CXX} -v
+  - |
+    echo "install: CC=${CC} CXX=${CXX}"
+    ${CC} -v
+    ${CXX} -v
 
 before_script:
   - set -e
-  - echo "before_script: CC=${CC} CXX=${CXX}"
-  - ${CC} -v
-  - ${CXX} -v
+  - |
+    echo "before_script: CC=${CC} CXX=${CXX}"
+    ${CC} -v
+    ${CXX} -v
 
 script:
   - set -e
-  - echo "script: CC=${CC} CXX=${CXX}"
-  - ${CC} -v
-  - ${CXX} -v
+  - |
+    echo "script: CC=${CC} CXX=${CXX}"
+    ${CC} -v
+    ${CXX} -v
   - make --no-print-directory all
 
 after_script:
