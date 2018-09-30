@@ -1,0 +1,43 @@
+language: cpp
+os: linux
+dist: trusty
+sudo: false
+
+env:
+  global:
+    - DEPS_DIR="${HOME}/deps"
+    - LOCAL_USR_DIR="${HOME}/local"
+
+cache:
+  ccache: false
+  directories:
+    - ${DEPS_DIR}
+
+matrix:
+  include:
+    - name: "Debug"
+      env: CXXFLAGS="-g -Og" CC="gcc-7" CXX="g++-7"
+      addons: { apt: { packages: ["g++-7", valgrind], sources: [ubuntu-toolchain-r-test] } }
+
+    - name: "Release"
+      env: CXXFLAGS="-g -O3" CC="gcc-7" CXX="g++-7"
+      addons: { apt: { packages: ["g++-7", valgrind], sources: [ubuntu-toolchain-r-test] } }
+
+before_install:
+  - echo "CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+
+install:
+  ### Fail on the first error ###
+  - set -e
+
+before_script:
+  - set -e
+  - echo "CC=${CC} CXX=${CXX}" && ${CC} -v && ${CXX} -v
+
+script:
+  - set -e
+  - make --no-print-directory all
+
+after_script:
+  - set -e
+  - ccache --show-stats
