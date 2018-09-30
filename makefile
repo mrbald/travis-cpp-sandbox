@@ -2,4 +2,4 @@
 
 CXXFLAGS:=-std=c++17
 all: travis-cpp-sandbox
-	@valgrind $<
+	@valgrind ./$<
